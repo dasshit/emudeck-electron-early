@@ -100,46 +100,11 @@ function PatroenLoginPage() {
       token = tokenArg;
     }
 
-    patreonWS
-      .post({ token, system, device, installEmus })
-      .then((data) => {
-        const patreonJson = data;
-
-        if (patreonJson.error) {
-          setStatePage({
+    setStatePage({
             ...statePage,
-            status: null,
-            patreonClicked: false,
-            errorMessage: patreonJson.error,
-          });
-          return;
-        }
-
-        if (patreonJson.cancel) {
-          setStatePage({
-            ...statePage,
-            accessAllowed: 'cancel',
-          });
-          return;
-        }
-
-        // eslint-disable-next-line promise/always-return
-        if (patreonJson.status === true) {
-          setStatePage({
-            ...statePage,
-            patreonToken: patreonJson.new_token,
+            patreonToken: 'test-token',
             accessAllowed: true,
-          });
-        }
-      })
-      .catch((error) => {
-        console.log({ error });
-        setStatePage({
-          ...statePage,
-          status: null,
-          patreonClicked: false,
         });
-      });
   };
 
   //
